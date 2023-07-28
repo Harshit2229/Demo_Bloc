@@ -14,23 +14,38 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Get User Detail"),
+        title: const Text(
+          "Get User Detail",
+          style: TextStyle(color: Colors.white), // Set the text color for the app bar title
+        ),
+        centerTitle: true, // Center the title
+        backgroundColor: const Color(0xFF271237), // You can change this color as you like
+        leading: Image.asset('assets/images/img_3.png', width: 5,
+          height: 5,), // Replace 'assets/logo.png' with your image path
       ),
       body: BlocBuilder<UsersBloc, UsersState>(
         builder: (context, state) {
-          if(state is UsersLoadingState){
+          if (state is UsersLoadingState) {
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
-          } else if(state is UsersLoadedState) {
+          } else if (state is UsersLoadedState) {
             return ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index){
-              return ListTile(
-                leading:
-                Text(state.usersModel[index].name.toString()),
-              );
-            });
+              itemCount: state.usersModel.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 3, // Add shadow effect
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Add margin
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // Add rounded corners
+                    side: BorderSide(color: Colors.grey.shade300), // Add border color
+                  ),
+                  child: ListTile(
+                    leading: Text(state.usersModel[index].name.toString()),
+                  ),
+                );
+              },
+            );
           } else if (state is UsersErrorState) {
             return Center(
               child: Text(state.errorMessage),
@@ -38,8 +53,8 @@ class _UserScreenState extends State<UserScreen> {
           }
           return const SizedBox();
         },
-      ));
-
-
+      ),
+      backgroundColor: Colors.white, // You can change this color as you like
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:integrationapi/Screens/user_screen.dart';
 
+import 'crud_screen.dart';
+
 class MyHomeScreen extends StatefulWidget {
   const MyHomeScreen({super.key});
 
@@ -163,7 +165,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const UserScreen()),
+                        MaterialPageRoute(builder: (context) => const CRUDScreen()),
                       );
                     },
                     child: const Text(

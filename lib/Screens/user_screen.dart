@@ -11,6 +11,11 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   @override
+  void initState() {
+    context.read<UsersBloc>().add(UsersLoadedEvent());
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -20,8 +25,8 @@ class _UserScreenState extends State<UserScreen> {
         ),
         centerTitle: true, // Center the title
         backgroundColor: const Color(0xFF271237), // You can change this color as you like
-        leading: Image.asset('assets/images/img_3.png', width: 5,
-          height: 5,), // Replace 'assets/logo.png' with your image path
+        leading: Image.asset('assets/images/img_8.png', width: 2,
+          height: 2,), // Replace 'assets/logo.png' with your image path
       ),
       body: BlocBuilder<UsersBloc, UsersState>(
         builder: (context, state) {
@@ -34,7 +39,9 @@ class _UserScreenState extends State<UserScreen> {
               itemCount: state.usersModel.length,
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 3, // Add shadow effect
+                  elevation: 3,
+                  // color: const Color(0xFFC194CC),
+                  color: const Color(0xFFCFBFD9),
                   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Add margin
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8), // Add rounded corners

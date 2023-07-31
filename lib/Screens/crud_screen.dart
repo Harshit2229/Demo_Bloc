@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrationapi/Models/user.dart';
 import '../crud/user_list_bloc.dart';
+import 'crud_detail.dart';
 
 class CRUDScreen extends StatefulWidget {
   const CRUDScreen({Key? key}) : super(key: key);
@@ -19,8 +20,18 @@ class _CRUDScreenState extends State<CRUDScreen> {
 
   @override
   void initState() {
-    _userListBloc = BlocProvider.of<UserListBloc>(context);
     super.initState();
+    _userListBloc = BlocProvider.of<UserListBloc>(context);
+  }
+
+  @override
+  void _showUserDetails(User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserDetailScreen(user: user),
+      ),
+    );
   }
 
   @override
@@ -33,11 +44,6 @@ class _CRUDScreenState extends State<CRUDScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFF271237),
-        leading: Image.asset(
-          'assets/images/img_10.png',
-          width: 2,
-          height: 2,
-        ),
       ),
 
       body: BlocBuilder<UserListBloc, UserListState>(
@@ -46,7 +52,9 @@ class _CRUDScreenState extends State<CRUDScreen> {
             itemCount: state.users.length,
             itemBuilder: (context, index) {
               final user = state.users[index];
-              return Card(
+              return GestureDetector(
+                  onTap: () => _showUserDetails(user),
+              child: Card(
                 color: const Color(0xFFCFBFD9),
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -67,6 +75,7 @@ class _CRUDScreenState extends State<CRUDScreen> {
                     ],
                   ),
                 ),
+              ),
               );
             },
           );
@@ -113,7 +122,7 @@ class _CRUDScreenState extends State<CRUDScreen> {
                 final newUser = User(
                   name: name,
                   email: email,
-                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  id: DateTime.now().millisecondsSinceEpoch.toString(), image: '',
                 );
                 _userListBloc.add(AddUser(user: newUser));
                 nameMap[newUser.id] = name;
@@ -173,6 +182,7 @@ class _CRUDScreenState extends State<CRUDScreen> {
                   id: user.id,
                   name: name,
                   email: email,
+                  image: '',
                 );
                 _userListBloc.add(UpdateUser(user: updatedUser, userIndex: userIndex));
                 Navigator.of(context).pop();

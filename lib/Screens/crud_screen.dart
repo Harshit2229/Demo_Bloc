@@ -73,6 +73,7 @@ class _CRUDScreenState extends State<CRUDScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF271237),
         onPressed: _addUser,
         child: const Icon(Icons.add),
       ),
